@@ -1,20 +1,27 @@
 import express from "express";
 import rp from 'request-promise';
 import cheerio from 'cheerio';
+import Iconv from 'iconv';
 
 const app = express();
 
 const options = {
-    uri: 'https://www.panasonic.com/jp/corporate/history/founders-quotes.html',
+    uri: 'https://www.panasonic.com/content/dam/panasonic/jp/corporate/history/founders-quotes/resource/DS0730.HTML',
+    encoding: null,
     transform: (body) => {
-        return cheerio.load(body);
+        const iconv = Iconv.Iconv('SHIFT_JIS', 'UTF-8');
+        const utf8Body = iconv.convert(body).toString();
+        return cheerio.load(utf8Body, {decodeEntities: false});
     }
 }
 
 app.get('/', (req, res) => {
     rp(options)
         .then(($) => {
-            console.log($('title').text());
+            const header = $('h1').html();
+            const content = $('p').html();
+            console.log(header);
+            console.log(content);
         })
         .catch((error) => {
             console.error('Error:', error);
