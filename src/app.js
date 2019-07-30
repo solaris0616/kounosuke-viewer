@@ -20,13 +20,14 @@ app.get('/', (req, res) => {
         .then(($) => {
             const header = $('h1').html();
             const content = $('p').html();
-            console.log(header);
-            console.log(content);
+            res.send({
+                title: header,
+                contents: content
+            });
         })
         .catch((error) => {
             console.error('Error:', error);
         });
-    res.send("Hello world.");
 });
 
 app.listen(3000, () => {

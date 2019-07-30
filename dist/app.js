@@ -27,12 +27,13 @@ app.get('/', function (req, res) {
   (0, _requestPromise["default"])(options).then(function ($) {
     var header = $('h1').html();
     var content = $('p').html();
-    console.log(header);
-    console.log(content);
+    res.send({
+      title: header,
+      contents: content
+    });
   })["catch"](function (error) {
     console.error('Error:', error);
   });
-  res.send("Hello world.");
 });
 app.listen(3000, function () {
   console.log("App listening on port 3000!");
