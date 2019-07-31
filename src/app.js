@@ -20,7 +20,7 @@ const createOptions = () => {
         transform: (body) => {
             const iconv = Iconv.Iconv('SHIFT_JIS', 'UTF-8');
             const utf8Body = iconv.convert(body).toString();
-            return cheerio.load(utf8Body, {decodeEntities: false});
+            return cheerio.load(utf8Body);
         }
     };
     return option;
@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 
     rp(options)
         .then(($) => {
-            const header = $('h1').html();
-            const content = $('p').html();
-            res.send({
+            const header = $('h1').text();
+            const content = $('p').text();
+            res.json({
                 header: header,
                 content: content
             });

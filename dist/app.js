@@ -26,9 +26,7 @@ var createOptions = function createOptions() {
       var iconv = _iconv["default"].Iconv('SHIFT_JIS', 'UTF-8');
 
       var utf8Body = iconv.convert(body).toString();
-      return _cheerio["default"].load(utf8Body, {
-        decodeEntities: false
-      });
+      return _cheerio["default"].load(utf8Body);
     }
   };
   return option;
@@ -37,11 +35,11 @@ var createOptions = function createOptions() {
 app.get('/', function (req, res) {
   var options = createOptions();
   (0, _requestPromise["default"])(options).then(function ($) {
-    var header = $('h1').html();
-    var content = $('p').html();
-    res.send({
-      title: header,
-      contents: content
+    var header = $('h1').text();
+    var content = $('p').text();
+    res.json({
+      header: header,
+      content: content
     });
   })["catch"](function (error) {
     console.error('Error:', error);
