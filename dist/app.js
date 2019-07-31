@@ -11,6 +11,7 @@ var _iconv = _interopRequireDefault(require("iconv"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])();
+app.set('view engine', 'ejs');
 
 var createOptions = function createOptions() {
   var jstOffsetMs = -9 * 60 * 60 * 1000;
@@ -33,6 +34,9 @@ var createOptions = function createOptions() {
 };
 
 app.get('/', function (req, res) {
+  res.render("index", {});
+});
+app.get('/get', function (req, res) {
   var options = createOptions();
   (0, _requestPromise["default"])(options).then(function ($) {
     var header = $('h1').text();

@@ -4,6 +4,7 @@ import cheerio from 'cheerio';
 import Iconv from 'iconv';
 
 const app = express();
+app.set('view engine', 'ejs');
 
 const createOptions = () => {
     const jstOffsetMs = (-9) * 60 * 60 * 1000;
@@ -27,6 +28,10 @@ const createOptions = () => {
 }
 
 app.get('/', (req, res) => {
+    res.render("index", {});
+});
+
+app.get('/get', (req, res) => {
     const options = createOptions();
 
     rp(options)
