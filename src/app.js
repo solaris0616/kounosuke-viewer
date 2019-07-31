@@ -5,18 +5,11 @@ import Iconv from 'iconv';
 
 const app = express();
 app.set('view engine', 'ejs');
+app.use(express.static('static'));
 
-const createOptions = () => {
-    const jstOffsetMs = (-9) * 60 * 60 * 1000;
-    const localOffsetMs = (new Date().getTimezoneOffset()) * 60 * 1000;
-    const todayJST = new Date(Date.now() - localOffsetMs + jstOffsetMs);
-
-    const month = (('00' + (todayJST.getMonth() + 1)).slice(-2));
-    const date = (('00' + todayJST.getDate()).slice(-2));
-    const filename = `https://www.panasonic.com/content/dam/panasonic/jp/corporate/history/founders-quotes/resource/DS${month}${date}.HTML`
-
+const createOptions = (dateStr) => {
     const option = {
-        uri: filename,
+        uri: `https://www.panasonic.com/content/dam/panasonic/jp/corporate/history/founders-quotes/resource/DS${dateStr}.HTML`,
         encoding: null,
         transform: (body) => {
             const iconv = Iconv.Iconv('SHIFT_JIS', 'UTF-8');
@@ -31,15 +24,14 @@ app.get('/', (req, res) => {
     res.render("index", {});
 });
 
-app.get('/get', (req, res) => {
-    const options = createOptions();
-
+app.get('/api/story', (req, res) => {
+    const options = createOptions(req.query.dateStr);
     rp(options)
         .then(($) => {
-            const header = $('h1').text();
+            const title = $('h1').text();
             const content = $('p').text();
             res.json({
-                header: header,
+                title: title,
                 content: content
             });
         })

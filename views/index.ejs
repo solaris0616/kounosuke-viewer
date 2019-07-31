@@ -1,6 +1,29 @@
 <html>
-    <head></head>
+    <head>
+        <title>1日1話ビューワー</title>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+    </head>
     <body>
-        <h1>New Project</h1>
+        <div class="content">
+            <div clss="datepicker">
+                <h2>日付を選択してください</h2>
+                <input type="text" id="flatpickr">        
+            </div>
+            <div class="title">
+                <h2 class="title-text"></h2>
+            </div>
+            <div class="content">
+                <p class="content-text"></p>
+            </div>
+        </div>
+
+        <script src="/js/script.js"></script>
     </body>
 </html>

@@ -12,16 +12,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var app = (0, _express["default"])();
 app.set('view engine', 'ejs');
+app.use(_express["default"]["static"]('static'));
 
-var createOptions = function createOptions() {
-  var jstOffsetMs = -9 * 60 * 60 * 1000;
-  var localOffsetMs = new Date().getTimezoneOffset() * 60 * 1000;
-  var todayJST = new Date(Date.now() - localOffsetMs + jstOffsetMs);
-  var month = ('00' + (todayJST.getMonth() + 1)).slice(-2);
-  var date = ('00' + todayJST.getDate()).slice(-2);
-  var filename = "https://www.panasonic.com/content/dam/panasonic/jp/corporate/history/founders-quotes/resource/DS".concat(month).concat(date, ".HTML");
+var createOptions = function createOptions(dateStr) {
   var option = {
-    uri: filename,
+    uri: "https://www.panasonic.com/content/dam/panasonic/jp/corporate/history/founders-quotes/resource/DS".concat(dateStr, ".HTML"),
     encoding: null,
     transform: function transform(body) {
       var iconv = _iconv["default"].Iconv('SHIFT_JIS', 'UTF-8');
@@ -36,13 +31,13 @@ var createOptions = function createOptions() {
 app.get('/', function (req, res) {
   res.render("index", {});
 });
-app.get('/get', function (req, res) {
-  var options = createOptions();
+app.get('/api/story', function (req, res) {
+  var options = createOptions(req.query.dateStr);
   (0, _requestPromise["default"])(options).then(function ($) {
-    var header = $('h1').text();
+    var title = $('h1').text();
     var content = $('p').text();
     res.json({
-      header: header,
+      title: title,
       content: content
     });
   })["catch"](function (error) {
