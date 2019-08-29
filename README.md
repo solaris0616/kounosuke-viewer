@@ -17,5 +17,5 @@ This is one of my JavaScript/nodejs learning achievements.
 git clone https://github.com/solaris0616/kounosuke-viewer.git
 cd kounosuke-viewer
 npm install
-nodejs dist/app.js
+node dist/app.js
 ```
