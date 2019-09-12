@@ -1,5 +1,7 @@
 # kounosuke-viewer
 
+<img width="500" alt="ss" src="https://user-images.githubusercontent.com/38127634/64749880-25d10280-d552-11e9-98ad-445565a5dab7.png">
+
 This application could shows the day-by-day stories by Kounosuke Matsushita of specified date.
 This is one of my JavaScript/nodejs learning achievements.
 
